@@ -1,0 +1,571 @@
+/* =================== THEME / BASE =================== */
+:root{
+  --bg:#fff; --text:#202020; --muted:#666a70;
+  --border:#e9e9ec; --surface:#f7f8fb;
+  --primary:#1473FF;           /* насыщенный синий как на скрине */
+  --primary-press:#0E63E6;
+  --r-lg:16px; --r-md:12px; --r-sm:8px;
+  --shadow-sm:0 6px 16px rgba(0,0,0,.06);
+  --shadow-md:0 12px 32px rgba(0,0,0,.08);
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* Layout */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* =================== HEADER / NAV =================== */
+.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:40}
+.site-nav .container{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px}
+.menu{margin:0;padding:0;list-style:none;display:flex;align-items:center;gap:18px;margin-left:auto}
+.menu a{opacity:.9}
+.menu a:hover{opacity:1}
+.menu .button{background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-weight:600}
+.menu .button:hover{background:#000}
+.hide-sm{display:block}
+
+/* =================== HERO =================== */
+.hero{padding:56px 0}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.lead{color:var(--muted)}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.15;margin:0 0 10px}
+
+/* =================== FORM (как на картинке) =================== */
+/* ===================== HERO ===================== */
+.hero {
+  padding: 64px 0 128px; /* отступы сверху/снизу как в фигме */
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* текст + картинка */
+  gap: 32px;
+  align-items: center;
+}
+
+/* Текстовый блок */
+.hero-copy h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 64px); /* 64px на десктопе */
+  line-height: 120%;
+  margin: 0 0 24px;
+  color: #202020;
+  text-transform: capitalize;
+}
+
+.hero-copy .lead {
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 600px;
+  margin: 0 0 40px;
+  color: #202020;
+}
+
+/* Форма */
+.form {
+  display: grid;
+  gap: 24px;
+}
+
+/* подписи групп (Pick your lucky day и т.д.) */
+.form .group-label {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  color: #202020;
+  margin-bottom: -12px; /* чтобы не было лишнего отступа */
+}
+
+/* input / select */
+.form input[type="text"],
+.form input[type="date"] {
+  height: 53px;
+  border: 1px solid #e9e9ec;
+  border-radius: 10px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  color: #202020;
+  outline: none;
+}
+
+.form input::placeholder {
+  color: #90A3BF;
+  font-weight: 500;
+}
+
+/* Радио-кнопки (Round trip / One way) */
+.segmented {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 4px 24px;
+}
+
+.segmented input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.segmented label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #202020;
+}
+
+.segmented input:checked + label {
+  color: #0578FF;
+  font-weight: 600;
+}
+
+/* пассажиры */
+.passenger-counter {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e9e9ec;
+  border-radius: 10px;
+  padding: 6px 10px;
+  background: #fff;
+}
+
+.passenger-counter img {
+  width: 18px;
+  height: 18px;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e9e9ec;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.count {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* дата в две колонки */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* кнопка */
+.primary {
+  height: 62px;
+  border: 0;
+  border-radius: 10px;
+  background: #0578FF;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+}
+.primary:hover {
+  background: #0466d1;
+}
+
+/* Картинка */
+.hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ===================== АДАПТИВ ===================== */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr; /* текст над картинкой */
+    gap: 48px;
+  }
+  .grid-2 {
+    grid-template-columns: 1fr; /* даты в столбик */
+  }
+}
+
+/* =================== HERO IMAGE =================== */
+.hero-image img{width:100%;height:auto;border-radius:16px;box-shadow:var(--shadow-md)}
+
+/* =================== STATS =================== */
+.stats{
+  background:#0578FF;
+  color:#fff;
+  padding:60px 0;                 /* из фигмы 60px вертикально */
+}
+
+/* контейнер = 1312px и внутренние 64px поля как в фигме */
+.stats .container.stats-grid{
+  max-width:1312px;
+  margin:0 auto;
+  padding:0 64px;
+
+  /* раскладка из фигмы: в одну линию, большие промежутки */
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;  /* растягиваем между краями */
+  gap:32px;                       /* запасной gap на переносах */
+}
+
+/* карточки-статы: фикс-ширины как в макете */
+.stat-item{
+  text-align:center;
+  background:transparent;
+  border:0;
+  padding:0;
+  color:#fff;
+}
+
+/* ширины групп из фигмы (если нужно прям «в пиксель») */
+.stat-item:nth-child(1){ width:167px; }
+.stat-item:nth-child(2){ width:145px; }
+.stat-item:nth-child(3){ width:157px; }
+.stat-item:nth-child(4){ width:155px; }
+
+/* число: 50/75 по фигме */
+.stat-item h3{
+  margin:0;
+  font-weight:700;
+  font-size:clamp(28px, 4.2vw, 50px);
+  line-height:75px;
+}
+
+/* подпись: 20/30 по фигме */
+.stat-item p{
+  margin:0;
+  font-weight:500;
+  font-size:clamp(14px, 2.6vw, 20px);
+  line-height:30px;
+}
+
+/* ===================== Адаптив ===================== */
+@media (max-width: 1200px){
+  /* когда не хватает места для «space-between», позволяем ужаться */
+  .stats .container.stats-grid{
+    padding:0 32px;
+    justify-content:center;
+    gap:48px 72px;               /* расстояния между элементами */
+  }
+}
+
+@media (max-width: 900px){
+  .stats{ padding:48px 0; }
+  .stats .container.stats-grid{
+    padding:0 24px;
+    justify-content:center;
+    gap:32px 48px;
+  }
+  /* можно снять фикс-ширины, чтобы адаптивнее сжимались */
+  .stat-item{ width:auto; min-width:180px; }
+  .stat-item h3{ line-height:1.2; }
+  .stat-item p{ line-height:1.4; }
+}
+
+@media (max-width: 560px){
+  .stats{ padding:40px 0; }
+  .stats .container.stats-grid{
+    padding:0 16px;
+    justify-content:center;
+    gap:16px;
+  }
+  .stat-item{ min-width:unset; width:100%; }
+  .stat-item h3{ font-size: clamp(26px, 8vw, 40px); }
+  .stat-item p{ font-size: clamp(13px, 4vw, 18px); }
+}
+
+
+/* =================== GALLERY =================== */
+.gallery{
+  padding: 128px 0 64px;
+  background:#fff;
+}
+.gallery .container{
+  max-width: 1312px;            /* как в фигме */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Заголовок 64/96 */
+.gallery h2{
+  font-weight:700;
+  font-size: clamp(28px, 5vw, 64px);
+  line-height: 1.5;             /* ~96 при 64px */
+  color:#202020;
+  margin: 0 0 24px;
+}
+
+/* Сетка 3 колонки с фикс-пикселями на десктопе, gap как в фигме */
+.gallery-grid{
+  display:grid;
+  grid-template-columns: 528px 305px 416px; /* 32px между колонками */
+  column-gap: 32px;
+  row-gap: 24px;                             /* между рядами */
+  justify-content:center;                    /* центрируем внутри .container */
+}
+
+/* Базовые стили карточек */
+.gallery-item{
+  border-radius:10px;
+  overflow:hidden;
+  background:#f2f2f2;
+  border: 1px solid #e9e9ec;
+}
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+/* Раскладка по местам (по порядку твоих 5 <figure>) */
+/* 1) Левый верх (528×376) */
+.gallery-item:nth-child(1){
+  grid-column: 1;
+  grid-row: 1;
+  aspect-ratio: 528 / 376;
+}
+/* 2) Левый низ (528×376) */
+.gallery-item:nth-child(2){
+  grid-column: 1;
+  grid-row: 2;
+  aspect-ratio: 528 / 376;
+}
+/* 3) Правый верх — левая (305×489) */
+.gallery-item:nth-child(3){
+  grid-column: 2;
+  grid-row: 1;
+  aspect-ratio: 305 / 489;
+}
+/* 4) Правый верх — правая (416×489) */
+.gallery-item:nth-child(4){
+  grid-column: 3;
+  grid-row: 1;
+  aspect-ratio: 416 / 489;
+}
+/* 5) Нижняя широкая справа (753×264), занимает 2 правые колонки */
+.gallery-item:nth-child(5){
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  aspect-ratio: 753 / 264;
+}
+
+/* ===================== Адаптив ===================== */
+/* На ~900px: делаем 2 колонки, логично переупорядочиваем */
+@media (max-width: 900px){
+  .gallery{ padding: 96px 0 48px; }
+  .gallery .container{ max-width: 100%; }
+  .gallery-grid{
+    grid-template-columns: 1fr 1fr;
+    column-gap:16px;
+    row-gap:16px;
+  }
+  /* Сохраняем композицию: левый столбик остаётся, правый — в два столбца */
+  .gallery-item:nth-child(1){ grid-column:1; grid-row:auto; aspect-ratio: 4 / 3; }
+  .gallery-item:nth-child(2){ grid-column:1; grid-row:auto; aspect-ratio: 4 / 3; }
+  .gallery-item:nth-child(3){ grid-column:2; grid-row:1; aspect-ratio: 3 / 5; }
+  .gallery-item:nth-child(4){ grid-column:2; grid-row:auto; aspect-ratio: 4 / 5; }
+  .gallery-item:nth-child(5){ grid-column:1 / -1; grid-row:auto; aspect-ratio: 16 / 6; }
+}
+
+/* На мобиле — одна колонка, красивые пропорции */
+@media (max-width: 560px){
+  .gallery{ padding: 64px 0 40px; }
+  .gallery-grid{
+    grid-template-columns: 1fr;
+    column-gap:0; row-gap:12px;
+  }
+  .gallery-item{ border-radius:12px; }
+  .gallery-item:nth-child(1),
+  .gallery-item:nth-child(2){ aspect-ratio: 4 / 3; }
+  .gallery-item:nth-child(3){ aspect-ratio: 3 / 4; }
+  .gallery-item:nth-child(4){ aspect-ratio: 4 / 5; }
+  .gallery-item:nth-child(5){ aspect-ratio: 16 / 9; }
+}
+
+
+/* =================== APP DOWNLOAD =================== */
+.app-download{
+  background:#FFC501;          /* жёлтая полоса как в фигме */
+  min-height:462px;
+  display:flex;
+  align-items:center;          /* вертикальное центрирование контента */
+}
+
+.app-download .container{
+  max-width: 863px;            /* ширина контента из макета */
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Заголовок: ≈62/93, центр */
+.app-download h2{
+  font-weight:700;
+  font-size: clamp(28px, 6vw, 62px);
+  line-height: 1.5;            /* 62 * 1.5 ≈ 93 */
+  color:#202020;
+  margin: -8px 0 24px;         /* лёгкий подъём как в фигме */
+}
+
+/* Ряд бейджей: равные интервалы и большой gap */
+.app-download .stores{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 100px;                  /* из фигмы */
+  flex-wrap: wrap;             /* чтобы не ломалось на узких экранах */
+  margin: 0 auto;
+}
+
+/* Размеры бейджей — ~65px высота */
+.app-download .stores a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.app-download .stores img{
+  height:65px;
+  width:auto;
+  display:block;
+}
+
+/* ===================== Адаптив ===================== */
+@media (max-width: 900px){
+  .app-download{ min-height: 420px; }
+  .app-download .stores{
+    gap: 40px;                 /* уменьшаем расстояние */
+    justify-content: center;   /* центрируем на планшете */
+  }
+  .app-download .stores img{ height:56px; }
+}
+
+@media (max-width: 560px){
+  .app-download{
+    min-height: auto;
+    padding: 48px 0;          /* вместо фиксированной высоты — комфортные отступы */
+  }
+  .app-download h2{ margin: 0 0 20px; }
+  .app-download .stores{
+    gap: 16px 20px;           /* компактнее на мобиле */
+    justify-content: center;
+  }
+  .app-download .stores img{ height:44px; }
+}
+
+
+/* =================== FAQ (clean) =================== */
+.faq{ padding:128px 0; background:#fff; }
+.faq .container{ max-width:1086px; margin:0 auto; padding:0 20px; }
+.faq h2{
+  font-weight:700; font-size:clamp(32px,5vw,64px); line-height:120%;
+  letter-spacing:.25px; color:#202020; margin:0 0 40px;
+}
+.faq details{
+  background:#fff; border-bottom:1px solid rgba(32,32,32,.5); padding:0;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary{
+  cursor:pointer; display:flex; align-items:flex-start; gap:16px;
+  padding:16px 0; margin:0; font-weight:500; font-size:18px; line-height:120%; color:#202020;
+}
+.faq summary::after{
+  content:'+'; margin-left:auto; width:24px; height:24px; display:inline-flex;
+  align-items:center; justify-content:center; font-size:18px; line-height:1; color:#202020;
+}
+.faq details[open] > summary::after{ content:'×'; }
+.faq summary:focus-visible{ outline:3px solid rgba(43,102,246,.25); border-radius:8px; }
+.faq details > p{ margin:0; padding:16px 0; font-size:16px; line-height:140%; color:#202020; }
+
+/* =================== CONTACT (clean) + BLUE BAND =================== */
+.contact{padding:24px 0 48px; position:relative;}
+.contact .container{display:flex;justify-content:center}
+.contact::after{
+  content:""; position:absolute; left:50%; transform:translateX(-50%);
+  bottom:0; width:100vw; height:404px; background:#0578FF; z-index:0;
+}
+.contact-card{
+  position:relative; z-index:1;
+  box-sizing:border-box; width:100%; max-width:640px; background:#fff;
+  border:1px solid rgba(32,32,32,.5); border-radius:10px; padding:60px 30px;
+  display:flex; flex-direction:column; align-items:center; color:var(--text); text-align:center;
+}
+.contact-card h2{ font-weight:700; font-size:clamp(32px,5vw,64px); line-height:120%; letter-spacing:.25px; margin:0 0 30px; }
+.contact-card p:first-of-type{ font-weight:400; font-size:clamp(18px,3.4vw,28px); line-height:140%; margin:0; }
+.contact-card p:nth-of-type(2){ font-weight:400; font-size:clamp(18px,3.4vw,28px); line-height:140%; margin:8px 0 0; }
+.contact-card address{ font-style:normal; font-weight:400; font-size:clamp(14px,2.6vw,18px); line-height:150%; margin:30px 0 0; }
+.contact-card a{ color:var(--text); text-decoration:none; }
+.contact-card a:hover{text-decoration:underline}
+
+/* =================== FOOTER (blue) =================== */
+.footer{background:#0578FF;color:#fff;border-top:0}
+.footer-top{padding:64px 0}
+.footer .container{
+  display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:40px; align-items:start;
+}
+.footer-brand{display:flex;align-items:center;gap:16px}
+.footer-brand .logo{height:51px;width:auto}
+.footer-links{grid-column: span 3; display:grid; grid-template-columns:repeat(3,1fr); gap:32px}
+.footer-column h4{margin:0 0 16px; font-weight:600; font-size:20px; line-height:150%; letter-spacing:-.02em; color:#fff}
+.footer-column ul{margin:0; padding:0; list-style:none; display:grid; gap:12px}
+.footer a{color:#fff; opacity:.95; text-decoration:none; font-weight:500; font-size:16px; line-height:150%; letter-spacing:-.02em}
+.footer a:hover{opacity:1; text-decoration:underline}
+.footer-bottom{border-top:0; padding:24px 0 40px; color:#fff; font-weight:600; font-size:16px; line-height:150%}
+.footer-bottom .container{display:flex; gap:24px; flex-wrap:wrap}
+
+/* =================== BREAKPOINTS =================== */
+@media (max-width: 1200px){
+  .footer .container{ grid-template-columns: 1fr 1fr; }
+  .footer-links{ grid-column: span 1; grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+  .footer .container{grid-template-columns:1fr; gap:32px}
+  .footer-links{ grid-column:auto; grid-template-columns: 1fr 1fr; gap:24px }
+  .contact{ padding-bottom: calc(40px + 340px); }
+  .contact::after{ height:340px; }
+}
+@media (max-width: 560px){
+  .site-nav .container{height:56px}
+  .hide-sm{display:none}
+  .stats-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+  .faq{ padding:64px 0; }
+  .faq .container{ padding:0 16px; }
+  .faq h2{ margin-bottom:24px; }
+  .faq summary{ padding:14px 0; }
+  .faq details > p{ padding:12px 0 16px; }
+  .contact{ padding-bottom: calc(32px + 280px); }
+  .contact::after{ height:280px; }
+  .footer-top{ padding:48px 0; }
+  .footer-links{ grid-template-columns:1fr; }
+  .footer-bottom{ padding:20px 0 32px; }
+}

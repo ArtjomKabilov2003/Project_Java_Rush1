@@ -64,3 +64,4 @@ const Stations = [
     "Bohinj Jezero",
     "Kranjska Gora Avtobusna Postaja"
 ];
+
