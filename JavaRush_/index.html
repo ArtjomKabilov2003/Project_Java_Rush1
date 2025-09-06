@@ -3,31 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project1 — Wonders</title>
+  <title>Wonders — Alpine Tickets</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <nav class="site-nav" aria-label="Primary">
-      <div class="container">
-        <a class="brand" href="#" aria-label="Wonders Home">
-          <img src="./assets/image/logo_black.svg" alt="Wonders Logo" />
-        </a>
+  <!-- ================= HEADER ================= -->
+<header class="site-header">
+  <nav class="site-nav" aria-label="Primary">
+    <div class="container">
+      <a class="brand" href="#" aria-label="Wonders Home">
+        <img src="./assets/image/logo_black.svg" alt="Wonders Logo" />
+      </a>
 
-        <ul class="menu">
+      <ul class="menu">
+        <li><a href="#">Mobile App</a></li>
+        <li><a href="#faq">FAQs</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="button" href="#">Sign Up</a></li>
+      </ul>
+
+      <!-- КНОПКА-БУРГЕР -->
+      <button class="burger" id="burger" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Мобильное меню (дровер) -->
+  <aside id="mobileMenu" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-sheet">
+      <div class="drawer-bar">
+        <img src="./assets/image/logo_black.svg" alt="Wonders" class="drawer-logo" />
+        <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+      </div>
+      <div class="drawer-panel">
+        <ul class="drawer-list">
           <li><a href="#">Mobile App</a></li>
           <li><a href="#faq">FAQs</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a class="button" href="#">Sign Up</a></li>
+          <li><a href="#" class="drawer-sign">Sign Up</a></li>
         </ul>
       </div>
-    </nav>
-  </header>
+    </div>
+  </aside>
+</header>
 
-  <!-- Main -->
+  <!-- ================= MAIN ================= -->
   <main>
-    <!-- Hero -->
+    <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -38,7 +61,7 @@
           </p>
 
           <!-- Booking Form -->
-          <form class="card form" id="bookingForm" ...>
+          <form id="bookingForm" class="card form" action="bus-list.html" method="GET" novalidate>
             <div class="segmented" role="group" aria-label="Trip type">
               <input type="radio" id="Round_trip" name="trip_type" value="round" checked>
               <label for="Round_trip">Round trip</label>
@@ -52,60 +75,63 @@
                 <span class="count" id="count">1</span>
                 <button type="button" class="qty-btn" id="plus" aria-label="Increase passengers">+</button>
                 <input type="hidden" id="passengers" name="passengers" value="1">
-                <span class="muted label">Passengers</span>
+                <span class="muted label"></span>
               </div>
             </div>
 
             <label for="from">Departure</label>
-            <input type="text" id="from" name="from" placeholder="Your City/Station" required>
+            <div class="autocomplete">
+              <input
+                type="text" id="from" name="from"
+                placeholder="Your City/Station" required
+                autocomplete="off" aria-autocomplete="list"
+                aria-expanded="false" aria-owns="from-list">
+              <ul id="from-list" class="ac-list" role="listbox" aria-label="Departure suggestions"></ul>
+            </div>
 
             <label for="to">Arrival</label>
-            <input type="text" id="to" name="to" placeholder="Where to?" required>
+            <div class="autocomplete">
+              <input
+                type="text" id="to" name="to"
+                placeholder="Where to?" required
+                autocomplete="off" aria-autocomplete="list"
+                aria-expanded="false" aria-owns="to-list">
+              <ul id="to-list" class="ac-list" role="listbox" aria-label="Arrival suggestions"></ul>
+            </div>
 
-            <!-- Новый заголовок группы -->
             <label class="group-label" aria-hidden="true">Pick your lucky day</label>
-
             <div class="grid-2">
               <div>
                 <label for="departure">Departure</label>
-                <input type="date" id="departure" name="departure" required>
+                <input type="text" id="departure" name="departure" placeholder="DD.MM.YYYY" readonly>
               </div>
               <div>
                 <label for="return">Return</label>
-                <input type="date" id="return" name="return">
+                <input type="text" id="return" name="return" placeholder="DD.MM.YYYY" readonly>
               </div>
             </div>
 
             <button class="primary" type="submit">Find My Alpine Ride</button>
           </form>
-
         </div>
 
         <div class="hero-image">
-          <img src="./assets/image/Hero.png" alt="Bus in the Alps" />
+          <img src="./assets/image/Hero.png" alt="Alpine drawing" />
         </div>
       </div>
     </section>
 
-    <!-- Stats -->
+    <!-- STATS -->
     <section class="stats">
       <div class="container stats-grid">
-        <div class="stat-item">
-          <h3>68k+</h3><p>Track kilometers</p>
-        </div>
-        <div class="stat-item">
-          <h3>1.4M+</h3><p>Photos Taken</p>
-        </div>
-        <div class="stat-item">
-          <h3>23M+</h3><p>Altitude Gained</p>
-        </div>
-        <div class="stat-item">
-          <h3>165+</h3><p>Years of history</p>
-        </div>
+        <div class="stat-item"><h3>68k+</h3><p>Daily riders</p></div>
+        <div class="stat-item"><h3>1.4M+</h3><p>Routes served</p></div>
+        <div class="stat-item"><h3>23M+</h3><p>Tickets issued</p></div>
+        <div class="stat-item"><h3>185+</h3><p>Alpine towns</p></div>
       </div>
     </section>
 
-    <!-- Gallery -->
+    <!-- GALLERY -->
     <section class="gallery">
       <div class="container">
         <h2>Glimpses of Glory</h2>
@@ -119,25 +145,19 @@
       </div>
     </section>
 
-    <!-- App Download -->
+    <!-- APP DOWNLOAD -->
     <section class="app-download">
       <div class="container">
         <h2>Free downloads app now!</h2>
         <div class="stores">
-          <a href="https://play.google.com" target="_blank" rel="noopener">
-            <img src="./assets/image/google-play.png" alt="Get it on Google Play" />
-          </a>
-          <a href="https://appgallery.huawei.com" target="_blank" rel="noopener">
-            <img src="./assets/image/appgallery.png" alt="Explore it on AppGallery" />
-          </a>
-          <a href="https://apps.apple.com" target="_blank" rel="noopener">
-            <img src="./assets/image/app-store.png" alt="Download on the App Store" />
-          </a>
+          <a href="#"><img src="./assets/image/google-play.png" alt="Google Play"></a>
+          <a href="#"><img src="./assets/image/appgallery.png" alt="AppGallery"></a>
+          <a href="#"><img src="./assets/image/app-store.png" alt="App Store"></a>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- FAQ (оставлен твой текст) -->
     <section class="faq" id="faq">
       <div class="container">
         <h2>FAQs.</h2>
@@ -190,7 +210,7 @@
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- CONTACT -->
     <section class="contact" id="contact">
       <div class="container">
         <div class="contact-card">
@@ -206,7 +226,11 @@
     </section>
   </main>
 
-  <!-- Footer -->
+
+
+<script src="./app.js" defer></script>  
+</body>
+  <!-- ================= FOOTER ================= -->
   <footer class="footer">
     <div class="container footer-top">
       <div class="footer-brand">
@@ -250,8 +274,6 @@
         <p>All Rights Reserved (Especially the Window Seats).</p>
       </div>
     </div>
+    
   </footer>
-
-  <script src="script.js" defer></script>
-</body>
 </html>
