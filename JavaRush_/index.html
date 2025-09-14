@@ -33,7 +33,6 @@
   <aside id="mobileMenu" class="mobile-drawer" aria-hidden="true">
     <div class="drawer-sheet">
       <div class="drawer-bar">
-        <img src="./assets/image/logo_black.svg" alt="Wonders" class="drawer-logo" />
         <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
       </div>
       <div class="drawer-panel">
@@ -68,7 +67,6 @@
 
               <input type="radio" id="One_way" name="trip_type" value="oneway">
               <label for="One_way">One Way</label>
-
               <div class="passenger-counter" aria-live="polite">
                 <img src="./assets/icons/user.png" alt="" aria-hidden="true">
                 <button type="button" class="qty-btn" id="minus" aria-label="Decrease passengers">−</button>
@@ -79,34 +77,36 @@
               </div>
             </div>
 
-            <label for="from">Departure</label>
-            <div class="autocomplete">
-              <input
-                type="text" id="from" name="from"
-                placeholder="Your City/Station" required
-                autocomplete="off" aria-autocomplete="list"
-                aria-expanded="false" aria-owns="from-list">
-              <ul id="from-list" class="ac-list" role="listbox" aria-label="Departure suggestions"></ul>
-            </div>
+            
+            <div class="grid-2">
+              <div class="autocomplete">
+                <label for="from">Departure</label>
+                <input
+                  type="text" id="from" name="from"
+                  placeholder="Your City/Station" required
+                  autocomplete="off" aria-autocomplete="list"
+                  aria-expanded="false" aria-owns="from-list">
+                <ul id="from-list" class="ac-list" role="listbox" aria-label="Departure suggestions"></ul>
+              </div>
 
-            <label for="to">Arrival</label>
-            <div class="autocomplete">
-              <input
-                type="text" id="to" name="to"
-                placeholder="Where to?" required
-                autocomplete="off" aria-autocomplete="list"
-                aria-expanded="false" aria-owns="to-list">
-              <ul id="to-list" class="ac-list" role="listbox" aria-label="Arrival suggestions"></ul>
+             
+              <div class="autocomplete">
+                <label for="to">Arrival</label>
+                <input
+                  type="text" id="to" name="to"
+                  placeholder="Where to?" required
+                  autocomplete="off" aria-autocomplete="list"
+                  aria-expanded="false" aria-owns="to-list">
+                <ul id="to-list" class="ac-list" role="listbox" aria-label="Arrival suggestions"></ul>
+              </div>
             </div>
 
             <label class="group-label" aria-hidden="true">Pick your lucky day</label>
             <div class="grid-2">
               <div>
-                <label for="departure">Departure</label>
                 <input type="text" id="departure" name="departure" placeholder="DD.MM.YYYY" readonly>
               </div>
               <div>
-                <label for="return">Return</label>
                 <input type="text" id="return" name="return" placeholder="DD.MM.YYYY" readonly>
               </div>
             </div>
@@ -132,18 +132,22 @@
     </section>
 
     <!-- GALLERY -->
-    <section class="gallery">
-      <div class="container">
-        <h2>Glimpses of Glory</h2>
-        <div class="gallery-grid">
-          <figure class="gallery-item"><img src="./assets/image/ing02.png" alt="Alpine view 1" /></figure>
-          <figure class="gallery-item"><img src="./assets/image/ing01.png" alt="Alpine view 2" /></figure>
-          <figure class="gallery-item"><img src="./assets/image/ing03.png" alt="Alpine view 3" /></figure>
-          <figure class="gallery-item"><img src="./assets/image/ing05.png" alt="Alpine view 4" /></figure>
-          <figure class="gallery-item"><img src="./assets/image/ing04.png" alt="Alpine view 5" /></figure>
+      <section class="gallery">
+        <div class="gallery-container">
+          <h2>Glimpses of Glory</h2>
+          <div class="gallery-images">
+            <div class="images1">
+                <img class="image1" src="./assets/image/ing02.png" alt="Glimpses">
+                <img class="image2" src="./assets/image/ing01.png" alt="Glimpses">
+            </div>
+            <div class="images2">
+                <img class="image3" src="./assets/image/ing03.png" alt="Glimpses">
+                <img class="image4" src="./assets/image/ing05.png" alt="Glimpses">
+                <img class="image5" src="./assets/image/ing04.png" alt="Glimpses">
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
     <!-- APP DOWNLOAD -->
     <section class="app-download">

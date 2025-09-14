@@ -246,3 +246,76 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = `bus-list.html?${qs}`;
   });
 });
+// Smooth FAQ <details>: always-animated open + close
+document.querySelectorAll(".faq details").forEach((el) => {
+  const summary = el.querySelector("summary");
+  const DURATION = 350;
+
+  // базовые стили через JS (можно оставить и в CSS)
+  el.style.overflow = "hidden";
+  el.style.transition = `height ${DURATION}ms ease`;
+  el.style.willChange = "height";
+
+  // старт: если закрыт — высота = summary; если открыт — зафиксируем px
+  const setCollapsed = () => { el.style.height = summary.offsetHeight + "px"; };
+  const setExpandedPx = () => { el.style.height = el.scrollHeight + "px"; };
+  const setAuto = () => { el.style.height = "auto"; };
+
+  if (el.open) {
+    // зафиксировать текущую полную высоту пикселями (чтобы было от чего анимировать закрытие)
+    setExpandedPx();
+  } else {
+    setCollapsed();
+  }
+
+  summary.addEventListener("click", (e) => {
+    e.preventDefault(); // берём управление на себя
+
+    // если сейчас идёт анимация — игнорим клики
+    if (el.dataset.anim === "opening" || el.dataset.anim === "closing") return;
+
+    if (!el.open) {
+      // ОТКРЫТИЕ: из высоты summary -> к полной
+      el.dataset.anim = "opening";
+      setCollapsed();   // ensure старт именно с высоты summary
+      el.open = true;   // раскрываем, чтобы контент появился в потоке
+      requestAnimationFrame(() => {
+        setExpandedPx();  // анимируем к полной высоте
+      });
+    } else {
+      // ЗАКРЫТИЕ: из полной -> к высоте summary
+      el.dataset.anim = "closing";
+      // если высота была auto — сперва фиксируем числом
+      if (getComputedStyle(el).height === "auto") setExpandedPx();
+      else setExpandedPx(); // всё равно фиксируем актуальную высоту
+      requestAnimationFrame(() => {
+        setCollapsed();     // анимируем к высоте summary
+      });
+    }
+  });
+
+  el.addEventListener("transitionend", (ev) => {
+    if (ev.propertyName !== "height") return;
+
+    const mode = el.dataset.anim;
+    el.dataset.anim = ""; // сброс
+
+    if (mode === "opening") {
+      // открытие завершено — возвращаем auto для естественного поведения
+      setAuto();
+    } else if (mode === "closing") {
+      // закрытие завершено — реально закрываем details (для ARIA/клавы)
+      el.open = false;
+      // оставим px-высоту равной summary (на случай мгновенного повторного клика)
+      setCollapsed();
+    }
+  });
+
+  // Пересчёт на ресайз (особенно важен для открытого состояния)
+  window.addEventListener("resize", () => {
+    if (el.dataset.anim) return; // не мешаем анимации
+    if (el.open && getComputedStyle(el).height === "auto") return; // auto — ок
+    if (el.open) setExpandedPx();
+    else setCollapsed();
+  });
+});
