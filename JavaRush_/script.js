@@ -1,8 +1,8 @@
 // $ — это сокращение для querySelector, 
 // а $$ — для querySelectorAll, только второй сразу возвращает массив.
-/*const $ = (s,el=document)=>el.querySelector(s);
+const $ = (s,el=document)=>el.querySelector(s);
 const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
-*/
+
 // Stations
 const Stations = [
     // Switzerland
@@ -73,7 +73,7 @@ const Stations = [
 
 
 //Autocomplete
-/* 
+
 function autocomplete(input, list){
   function show(items){
     list.innerHTML = items.slice(0,12).map((t,i)=>`<li data-i="${i}">${t}</li>`).join("");
@@ -249,7 +249,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     location.href = `bus-list.html?${qs}`;
   });
 });
-*/
+
 // FAQ
 document.querySelectorAll(".faq details").forEach(d=>{
   const s = d.querySelector("summary");
