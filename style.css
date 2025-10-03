@@ -887,4 +887,12 @@ body.no-scroll{
   .dp-cell{ height:38px; border-radius:10px; }
 }
 
+.error-message {
+    color: red;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+.is-invalid {
+    border-color: red !important;
+}
 
