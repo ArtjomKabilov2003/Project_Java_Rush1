@@ -94,100 +94,7 @@ function autocomplete(input, list){
   });
 }
 
-//Datepicker
-let dpRoot, dpGrid, dpTitle, dpActive, dpCur = new Date();
-const WEEK = ["Mo","Tu","We","Th","Fr","Sa","Su"];
-const today = new Date(); today.setHours(0,0,0,0);
 
-function pad(n){ return String(n).padStart(2,"0"); }
-function fmt(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
-function fmtHuman(d){ return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`; }
-
-function dpBuild(){
-  dpRoot = document.createElement("div");
-  dpRoot.className = "dp";
-  dpRoot.innerHTML = `
-    <div class="dp-header">
-      <button class="dp-btn" data-nav="-1">‹</button>
-      <div class="dp-title"></div>
-      <button class="dp-btn" data-nav="1">›</button>
-    </div>
-    <div class="dp-week">${WEEK.map(w=>`<div style="text-align:center">${w}</div>`).join("")}</div>
-    <div class="dp-grid"></div>
-    <div class="dp-footer">
-      <button class="dp-link" data-act="reset">Reset</button>
-      <button class="dp-link" data-act="apply">Apply</button>
-    </div>`;
-  document.body.appendChild(dpRoot);
-  dpTitle = $(".dp-title", dpRoot);
-  dpGrid  = $(".dp-grid", dpRoot);
-
-  dpRoot.addEventListener("click", (e)=>{
-    const nav = e.target.closest("[data-nav]");
-    if(nav){ dpCur.setMonth(dpCur.getMonth() + Number(nav.dataset.nav)); dpRender(); }
-
-    const cell = e.target.closest(".dp-cell[data-date]");
-    if(cell){ $$(".dp-cell.sel", dpGrid).forEach(c=>c.classList.remove("sel")); cell.classList.add("sel"); dpGrid.dataset.sel = cell.dataset.date; }
-
-    const act = e.target.closest("[data-act]");
-    if(act){
-      if(act.dataset.act==="reset"){ dpActive.value=""; dpActive.dataset.value=""; dpClose(); }
-      if(act.dataset.act==="apply"){
-        const sel = dpGrid.dataset.sel;
-        if(sel){ const d = new Date(sel); dpActive.value = fmtHuman(d); dpActive.dataset.value = fmt(d); }
-        dpClose();
-      }
-    }
-  });
-
-  document.addEventListener("keydown", e=>{ if(e.key==="Escape") dpClose(); });
-  document.addEventListener("click", e=>{
-    if(dpRoot.classList.contains("open") && !dpRoot.contains(e.target) && e.target!==dpActive) dpClose();
-  }, true);
-
-  ["scroll","resize"].forEach(evt=>{
-    window.addEventListener(evt, ()=>{ if(dpRoot.classList.contains("open") && dpActive) dpPlace(dpActive); }, {passive:true});
-  });
-}
-
-function dpRender(){
-  dpTitle.textContent = dpCur.toLocaleString(undefined,{month:"long", year:"numeric"});
-  dpGrid.innerHTML = "";
-  const first = new Date(dpCur.getFullYear(), dpCur.getMonth(), 1);
-  const start = new Date(first); start.setDate(1 - ((first.getDay()+6)%7)); // Пн
-  const minDate = (dpActive?.id==="return" && $("#departure").dataset.value) ? new Date($("#departure").dataset.value) : today;
-
-  for(let i=0;i<42;i++){
-    const d = new Date(start); d.setDate(start.getDate()+i);
-    const el = document.createElement("div");
-    el.className = "dp-cell";
-    el.textContent = d.getDate();
-    el.dataset.date = fmt(d);
-    if(d.getMonth()!==dpCur.getMonth()) el.style.opacity=".45";
-    if(d < minDate) el.classList.add("dis");
-    if(dpActive?.dataset.value && fmt(d)===dpActive.dataset.value) el.classList.add("sel");
-    dpGrid.appendChild(el);
-  }
-}
-
-function dpPlace(input){
-  const r = input.getBoundingClientRect(), pad = 8;
-  const w = dpRoot.offsetWidth || 320, h = dpRoot.offsetHeight || 360;
-  let top  = Math.min(window.innerHeight - h - pad, r.bottom + pad);
-  let left = Math.min(window.innerWidth  - w - pad, r.left);
-  dpRoot.style.top  = Math.max(pad, top)  + "px";
-  dpRoot.style.left = Math.max(pad, left) + "px";
-}
-
-function dpOpen(input){
-  dpActive = input;
-  dpCur = input.dataset.value ? new Date(input.dataset.value) : new Date();
-  dpCur.setDate(1);
-  dpRender();
-  dpRoot.classList.add("open");
-  dpPlace(input);
-}
-function dpClose(){ dpRoot.classList.remove("open"); }
 
 // Html Main
 window.addEventListener("DOMContentLoaded", ()=>{
@@ -204,7 +111,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
   // тип поездки
   const ret = $("#return"), dep = $("#departure");
-  $$('.trip-type input[name="trip_type"]').forEach(r=>{
+  $$('.segmented input[name="trip_type"]').forEach(r=>{
     r.addEventListener("change", ()=>{
       const oneway = r.value==="oneway" && r.checked;
       ret.disabled = oneway; ret.parentElement.style.opacity = oneway ? .6 : 1;
@@ -216,11 +123,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   autocomplete($("#from"), $("#from-list"));
   autocomplete($("#to"),   $("#to-list"));
 
-  // дата-пикер
-  dpBuild();
-  dep.addEventListener("click", ()=> dpOpen(dep));
-  ret.addEventListener("click", ()=> dpOpen(ret));
-
+ 
   // форма
   $("#bookingForm").addEventListener("submit", (e)=>{
     e.preventDefault();
@@ -291,4 +194,176 @@ document.addEventListener('keydown', e=>{
 });
 drawer.addEventListener('click', e=>{
   if(e.target.closest('.drawer-list a')) burger.click();
+});
+// ==== элементы (как у тебя)
+const leftMonthYearEl = document.getElementById('left-month-year');
+const rightMonthYearEl = document.getElementById('right-month-year');
+const prevMonthBtn     = document.getElementById('prev-month-btn');
+const nextMonthBtn     = document.getElementById('next-month-btn');
+const currMonthDatesEl = document.getElementById('curr-month-dates');
+const nextMonthDatesEl = document.getElementById('next-month-dates');
+const applyBtn         = document.querySelector('.calendar-footer .apply-btn');
+const resetBtn         = document.querySelector('.calendar-footer .reset-btn');
+
+// поля формы (у тебя уже есть)
+const depInput = document.getElementById('departure');
+const retInput = document.getElementById('return');
+
+// утилиты
+const pad = n => String(n).padStart(2,'0');
+const toISO = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const toHuman = (d, loc='en-GB') => d.toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
+const sameDay = (a,b) => a && b && a.getFullYear()==b.getFullYear() && a.getMonth()==b.getMonth() && a.getDate()==b.getDate();
+const between = (d, a, b) => a && b && d>=a && d<=b;
+
+class Calendar {
+  #left; #right;            // Date: 1-е число левого и правого месяцев
+  #start = null;            // выбранный выезд
+  #end = null;              // выбранный возврат (для round)
+  #min = new Date();        // нельзя раньше сегодня
+
+  constructor() {
+    this.#min.setHours(0,0,0,0);
+    const now = new Date(); now.setDate(1);
+    this.#left  = new Date(now);
+    this.#right = new Date(now.getFullYear(), now.getMonth()+1, 1);
+  }
+
+  init(){
+    // восстановим из инпутов, если уже есть
+    if (depInput?.dataset.value) this.#start = new Date(depInput.dataset.value);
+    if (retInput?.dataset.value) this.#end   = new Date(retInput.dataset.value);
+    this.render();
+
+    prevMonthBtn.addEventListener('click', ()=>{ 
+      const prev = new Date(this.#left.getFullYear(), this.#left.getMonth()-1, 1);
+      const minM = new Date(this.#min.getFullYear(), this.#min.getMonth(), 1);
+      if(prev < minM) return; // не листать в прошлое
+      this.#left = prev;
+      this.#right = new Date(prev.getFullYear(), prev.getMonth()+1, 1);
+      this.render();
+    });
+    nextMonthBtn.addEventListener('click', ()=>{
+      const next = new Date(this.#left.getFullYear(), this.#left.getMonth()+1, 1);
+      this.#left = next;
+      this.#right = new Date(next.getFullYear(), next.getMonth()+1, 1);
+      this.render();
+    });
+
+    // делегирование кликов по дням
+    const onClickDay = (e)=>{
+      const btn = e.target.closest('button.date');
+      if(!btn || btn.disabled) return;
+      const iso = btn.dataset.date;
+      const d = new Date(iso); d.setHours(0,0,0,0);
+
+      const oneway = document.querySelector('.segmented input[name="trip_type"]:checked')?.value === 'oneway';
+      if (oneway){
+        this.#start = d; this.#end = null;
+      } else {
+        if(!this.#start || this.#end){ // начинаем новый диапазон
+          this.#start = d; this.#end = null;
+        } else if (d < this.#start){   // если кликнули раньше старта — перекинем
+          this.#end = this.#start; this.#start = d;
+        } else {
+          this.#end = d;
+        }
+      }
+      this.render();
+    };
+    currMonthDatesEl.addEventListener('click', onClickDay);
+    nextMonthDatesEl.addEventListener('click', onClickDay);
+
+    // Apply / Reset
+    applyBtn?.addEventListener('click', ()=>{
+      if(!this.#start) this.#start = new Date(this.#min);
+
+      depInput.value = toHuman(this.#start);
+      depInput.dataset.value = toISO(this.#start);
+
+      const oneway = document.querySelector('.segmented input[name="trip_type"]:checked')?.value === 'oneway';
+      if (oneway){
+        retInput.value = ""; retInput.dataset.value = "";
+      } else {
+        const end = this.#end ? this.#end : new Date(this.#start.getFullYear(), this.#start.getMonth(), this.#start.getDate()+3);
+        retInput.value = toHuman(end);
+        retInput.dataset.value = toISO(end);
+      }
+      // чтобы твоя валидация/логика знала о смене
+      depInput.dispatchEvent(new Event('change'));
+      retInput.dispatchEvent(new Event('change'));
+    });
+
+    resetBtn?.addEventListener('click', ()=>{
+      this.#start = this.#end = null;
+      depInput.value = depInput.dataset.value = "";
+      retInput.value = retInput.dataset.value = "";
+      this.render();
+    });
+
+    // смена типа поездки — очищаем возврат и визуально дизейблим
+    document.querySelectorAll('.segmented input[name="trip_type"]').forEach(r=>{
+      r.addEventListener('change', ()=>{
+        const oneway = (r.value==='oneway' && r.checked);
+        retInput.disabled = oneway;
+        retInput.parentElement.style.opacity = oneway ? .6 : 1;
+        if(oneway){ this.#end = null; retInput.value=""; retInput.dataset.value=""; this.render(); }
+      });
+    });
+  }
+
+  render(){
+    // заголовки
+    leftMonthYearEl.textContent  = this.#left.toLocaleString('en',{month:'long',year:'numeric'});
+    rightMonthYearEl.textContent = this.#right.toLocaleString('en',{month:'long',year:'numeric'});
+
+    // перерисуем сетки
+    currMonthDatesEl.innerHTML = this.#buildMonthHTML(this.#left);
+    nextMonthDatesEl.innerHTML = this.#buildMonthHTML(this.#right);
+  }
+
+  #buildMonthHTML(baseDate){
+    const y = baseDate.getFullYear(), m = baseDate.getMonth();
+    const first = new Date(y, m, 1);
+    const startIdx = (first.getDay()+6)%7; // Monday=0
+    const dim = new Date(y, m+1, 0).getDate();
+
+    let html = '';
+    // пустые ячейки до 1-го
+    for(let i=0;i<startIdx;i++) html += `<span class="empty"></span>`;
+
+    for(let d=1; d<=dim; d++){
+      const date = new Date(y, m, d); date.setHours(0,0,0,0);
+      const iso = toISO(date);
+      let cls = "date";
+      if (this.#start && !this.#end && sameDay(date, this.#start)) cls += " selected range-start";
+      if (this.#end) {
+        if (sameDay(date, this.#start)) cls += " selected range-start";
+        else if (sameDay(date, this.#end)) cls += " selected range-end";
+        else if (between(date, this.#start, this.#end)) cls += " in-range";
+      }
+      const disabled = date < this.#min ? ' disabled' : '';
+      html += `<button class="${cls}" data-date="${iso}"${disabled}>${d}</button>`;
+    }
+    return html;
+  }
+}
+
+// инициализация
+const calendar = new Calendar();
+calendar.init();
+
+// ВАЖНО: твоя форма уже делает redirect на bus-list.html.
+// Если у тебя есть своя валидация — оставь. На всякий случай — быстрая проверка:
+document.getElementById('bookingForm')?.addEventListener('submit', (e)=>{
+  const type = document.querySelector('.segmented input[name="trip_type"]:checked')?.value || 'round';
+  const depISO = depInput.dataset.value || "";
+  const retISO = retInput.dataset.value || "";
+  const errs = [];
+  if (!depISO) errs.push('Please select a departure date.');
+  if (type==='round' && !retISO) errs.push('Please select a return date.');
+  if (type==='round' && depISO && retISO && new Date(retISO) < new Date(depISO)) errs.push('Return date cannot be before departure.');
+  if (errs.length){ e.preventDefault(); alert(errs[0]); }
+  // если всё ок — уйдут параметры, т.к. в input.value мы не трогаем ISO;
+  // при желании можно перед сабмитом принудительно: depInput.value=depISO; if(type==='round') retInput.value=retISO;
 });

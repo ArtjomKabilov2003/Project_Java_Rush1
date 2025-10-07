@@ -1,10 +1,12 @@
-/*  THEME / BASE  */
+
 :root{
   --bg:#fff; --text:#202020; --muted:#666a70;
   --border:#e9e9ec; --surface:#f7f8fb;
   --primary:#1473FF; --primary-press:#0E63E6;
   --yellow:#FFC501; --blue:#0578FF;
-
+  --primary-text-color: #202020;
+  --secondary-text-color: #90A3BF;
+  --primary-blue-train: #0578FF;
   --r-lg:16px; --r-md:12px; --r-sm:10px;
   --shadow-sm:0 6px 16px rgba(0,0,0,.06);
   --shadow-md:0 12px 32px rgba(0,0,0,.08);
@@ -750,141 +752,150 @@ body.no-scroll{
 
   .footer-bottom{ padding:0 20px 64px; }
 }
-.dp{
-  position:absolute;                /* координаты ставь из JS рядом с инпутом */
-  z-index:1000;
-  width:clamp(280px, 92vw, 560px);
-  padding:16px 16px 12px;
-  border:1px solid var(--border);
-  border-radius:var(--r-lg);
-  background:var(--bg);
-  color:var(--text);
-  box-shadow:var(--shadow-md);
-  user-select:none;
-
-  /* скрыт по умолчанию — показывай классом .show */
-  opacity:0; visibility:hidden; transform:translateY(8px);
-  transition:opacity .18s ease, transform .18s ease, visibility .18s;
-}
-.dp.show{ opacity:1; visibility:visible; transform:translateY(0); }
-
-/* === Header === */
-.dp-header{
-  display:grid;
-  grid-template-columns:40px 1fr 40px;
-  align-items:center;
-  gap:8px;
-  margin-bottom:8px;
-}
-.dp-title{
-  text-align:center;
-  font-weight:600;
-  letter-spacing:.2px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+/*CALENDAR*/
+.date-input-button {
+    padding: 15px 24px;
+    background: #FFFFFF;
+    border: none;
+    color: var(--secondary-text-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 305px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
-/* Нав-кнопки */
-.dp-btn{
-  width:36px; height:36px;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:var(--r-sm);
-  display:inline-flex; align-items:center; justify-content:center;
-  cursor:pointer;
-  transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-.dp-btn:hover{ background:var(--surface); }
-.dp-btn:active{ background:#eef3ff; border-color:#d8e4ff; }
-.dp-btn:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
-
-/* === Week row === */
-.dp-week{
-  display:grid;
-  grid-template-columns:repeat(7, 1fr);
-  gap:6px;
-  margin:6px 0 8px;
-  color:var(--muted);
-  font-size:.85rem;
-}
-.dp-week > div{ text-align:center; }
-
-/* === Grid with days === */
-.dp-grid{
-  display:grid;
-  grid-template-columns:repeat(7, 1fr);
-  gap:6px;
-  margin-bottom:12px;
-}
-.dp-cell{
-  position:relative;
-  height:42px;
-  border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer;
-  transition:background .12s ease, color .12s ease, box-shadow .12s ease;
-  background:transparent;
-}
-.dp-cell:hover{ background:var(--surface); }
-.dp-cell:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
-
-/* Вспомогательные состояния (ожидаются из JS рендера) */
-.dp-cell.is-out{ color:var(--muted); opacity:.6; }
-.dp-cell.is-disabled{
-  color:#b7bcc3; cursor:not-allowed; pointer-events:none; background:transparent;
-}
-.dp-cell.is-today{
-  box-shadow:inset 0 0 0 2px rgba(20,115,255,.25);
-  border-radius:12px;
+.calendar {
+    margin-top: 16px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    padding: 24px 40px;
+    max-width: 640px;
 }
 
-/* Выбранная дата */
-.dp-cell.sel{
-  background:var(--primary);
-  color:#fff;
-}
-.dp-cell.sel:hover{ background:var(--primary-press); }
-
-/* === Footer === */
-.dp-footer{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:12px;
-  padding-top:6px;
+.calendar .months {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
 }
 
-/* Кнопки Reset / Apply */
-.dp-link{
-  height:36px; padding:0 14px;
-  border-radius:var(--r-sm);
-  border:1px solid transparent;
-  background:transparent;
-  color:var(--text);
-  cursor:pointer;
-  transition:background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
-  font-weight:500;
-}
-.dp-link[data-act="reset"]{
-  color:var(--muted);
-}
-.dp-link[data-act="reset"]:hover{
-  background:var(--surface);
+.calendar .month {
+    min-width: 0;
 }
 
-.dp-link[data-act="apply"]{
-  background:var(--primary);
-  color:#fff;
+.calendar-header {
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    align-items: center;
+    margin-bottom: 16px;
 }
-.dp-link[data-act="apply"]:hover{ background:var(--primary-press); }
-.dp-link:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
 
-/* === Optional: маленькие экраны === */
-@media (max-width:420px){
-  .dp{ padding:12px; border-radius:var(--r-md); }
-  .dp-btn{ width:32px; height:32px; border-radius:10px; }
-  .dp-cell{ height:38px; border-radius:10px; }
+.calendar-header .month-year {
+    text-align: center;
+    color: var(--primary-text-color);
 }
+
+.nav-btn {
+    height: 32px;
+    width: 32px;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background: #F1F3F7;
+}
+
+.header-spacer { width: 32px; }
+
+.calendar-body .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    color: var(--secondary-text-color);
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+}
+
+.calendar-body .weekdays span {
+    text-align: center;
+}
+
+.calendar-body .dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-body .dates .date,
+.calendar-body .dates .empty {
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-text-color);
+    background: transparent;
+    border: none;
+}
+
+.calendar-body .dates .date {
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.calendar-body .dates .date:hover {
+    background: #EFF4FF;
+    color: var(--primary-blue-train);
+}
+
+.calendar-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 16px;
+    gap: 16px;
+}
+
+.reset-btn {
+    border: none;
+    background: transparent;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+}
+
+.apply-btn {
+    border: none;
+    background: var(--primary-blue-train);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .calendar .months {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .calendar {
+        padding: 16px;
+    }
+}
+/* выбранные/диапазон */
+.date.selected { background:#2563eb; color:#fff; }
+.date.in-range { background:#eaf2ff; }
+.date.range-start, .date.range-end { position:relative; }
+.date.range-start::after, .date.range-end::after{
+  content:""; position:absolute; inset:0; border:2px solid #2563eb; border-radius:8px; pointer-events:none;
+}
+/* заблокированные дни */
+.date[disabled]{ opacity:.35; cursor:not-allowed; }
 
 
