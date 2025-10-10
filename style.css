@@ -43,9 +43,13 @@ body.no-scroll{
 
 /*  HEADER / NAV  */
 .site-header{
-  position:sticky;
-  top:0;
-  z-index:100
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background:linear-gradient(#eef5ff,#f8fbff);
+
 }
 .site-nav .container{
   display:flex;
@@ -897,5 +901,61 @@ body.no-scroll{
 }
 /* заблокированные дни */
 .date[disabled]{ opacity:.35; cursor:not-allowed; }
+/* Стили для календаря с выделением диапазона */
+.calendar .dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
 
+.calendar .date {
+  border: none;
+  background: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
+.calendar .date:hover:not(.disabled) {
+  background: #f0f0f0;
+}
+
+.calendar .date.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Выделение диапазона дат */
+.calendar .date.in-range {
+  background: #e3f2fd;
+  border-radius: 0;
+}
+
+.calendar .date.range-start {
+  background: #2196f3;
+  color: white;
+  border-radius: 4px 0 0 4px;
+}
+
+.calendar .date.range-end {
+  background: #2196f3;
+  color: white;
+  border-radius: 0 4px 4px 0;
+}
+
+.calendar .date.range-start-end {
+  background: #2196f3;
+  color: white;
+  border-radius: 4px;
+}
+
+/* Убираем кнопку Apply из футера календаря */
+.calendar-footer .apply-btn {
+  display: none;
+}
+
+.calendar-footer .reset-btn {
+  width: 100%;
+  margin: 0;
+}

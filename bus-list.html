@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Trip Summary</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: 
+        linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2)),
+        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    .summary-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.4);
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+    }
+
+    .summary-card h2 {
+      margin-bottom: 32px;
+      font-size: 1.8em;
+      color: #1e40af;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      font-family: 'Georgia', serif;
+    }
+
+    .trip-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-left: 4px solid #3b82f6;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .detail-row:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateX(2px);
+      border-left-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #1e40af;
+      min-width: 110px;
+      text-align: left;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-family: 'Georgia', serif;
+    }
+
+    .detail-value {
+      flex: 1;
+      text-align: left;
+      color: #374151;
+      font-weight: 500;
+      font-size: 1em;
+      line-height: 1.4;
+    }
+
+    .passenger-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 0.9em;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    }
+
+    .passenger-icon {
+      font-size: 1.1em;
+    }
+
+    .empty-value {
+      color: #6b7280;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .mountain-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .summary-card {
+      animation: fadeInUp 0.7s ease-out;
+    }
+
+    .detail-row {
+      animation: fadeInUp 0.5s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .detail-row:nth-child(1) { animation-delay: 0.1s; }
+    .detail-row:nth-child(2) { animation-delay: 0.2s; }
+    .detail-row:nth-child(3) { animation-delay: 0.3s; }
+    .detail-row:nth-child(4) { animation-delay: 0.4s; }
+    .detail-row:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .summary-card {
+        padding: 30px 20px;
+        margin: 10px;
+      }
+      
+      .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 12px 14px;
+      }
+      
+      .detail-label {
+        min-width: auto;
+        font-size: 0.8em;
+      }
+      
+      .detail-value {
+        text-align: left;
+        width: 100%;
+        font-size: 0.95em;
+      }
+      
+      .summary-card h2 {
+        font-size: 1.6em;
+        margin-bottom: 25px;
+      }
+    }
+
+    /* Дополнительные стили для синей тематики */
+    .alpine-theme {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .blue-colors {
+      color: #1e40af;
+      border-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <div class="summary-card alpine-theme">
+    <span class="mountain-icon">⛰️</span>
+    <h2>Alpine Journey</h2>
+    <div class="trip-details">
+      <div class="detail-row blue-colors">
+        <span class="detail-label">From</span>
+        <span class="detail-value" id="summary-from">-</span>
+      </div>
+      <div class="detail-row blue-colors">
+        <span class="detail-label">To</span>
+        <span class="detail-value" id="summary-to">-</span>
+      </div>
+      <div class="detail-row blue-colors">
+        <span class="detail-label">Departure</span>
+        <span class="detail-value" id="summary-depart">-</span>
+      </div>
+      <div class="detail-row blue-colors">
+        <span class="detail-label">Return</span>
+        <span class="detail-value" id="summary-return">-</span>
+      </div>
+      <div class="detail-row blue-colors">
+        <span class="detail-label">Travelers</span>
+        <span class="detail-value">
+          <span class="passenger-badge" id="summary-pax">
+            <span class="passenger-icon">👤</span>
+            <span>1</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    
+    // Получаем данные из URL
+    const from = params.get('from') || '-';
+    const to = params.get('to') || '-';
+    const departure = params.get('departure') || '-';
+    const returnDate = params.get('return') || '-';
+    const passengers = params.get('passengers') || '1';
+
+    // Форматируем даты если они есть
+    function formatDate(dateStr) {
+      if (dateStr === '-') return dateStr;
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { 
+          weekday: 'short', 
+          month: 'short', 
+          day: 'numeric',
+          year: 'numeric'
+        });
+      } catch {
+        return dateStr;
+      }
+    }
+
+    // Устанавливаем значения
+    document.getElementById('summary-from').textContent = from;
+    document.getElementById('summary-to').textContent = to;
+    document.getElementById('summary-depart').textContent = formatDate(departure);
+    document.getElementById('summary-return').textContent = formatDate(returnDate);
+    
+    // Стилизуем пассажиров
+    const passengerBadge = document.getElementById('summary-pax');
+    passengerBadge.innerHTML = `<span class="passenger-icon">👤</span><span>${passengers}</span>`;
+
+    // Добавляем стили для пустых значений
+    const elements = [
+      document.getElementById('summary-from'),
+      document.getElementById('summary-to'),
+      document.getElementById('summary-depart'),
+      document.getElementById('summary-return')
+    ];
+
+    elements.forEach(element => {
+      if (element.textContent === '-') {
+        element.textContent = 'Not selected';
+        element.classList.add('empty-value');
+      }
+    });
+
+    // Обновляем заголовок если есть направление
+    if (to !== '-') {
+      const destination = to.split(' ')[0];
+      document.querySelector('h2').textContent = `Journey to ${destination}`;
+    }
+  </script>
+</body>
+</html>
