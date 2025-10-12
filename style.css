@@ -42,6 +42,9 @@ body.no-scroll{
 }
 
 /*  HEADER / NAV  */
+main {
+  padding-top: 30px; /* Высота хедера */
+}
 .site-header{
   position: fixed;
   top: 0;
