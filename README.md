@@ -38,25 +38,6 @@ Figma макет: https://www.figma.com/design/Qq0LN905byLasCfNboVzU2/Module-1-W
 - Vanilla JavaScript - интерактивность без фреймворков
 - Адаптивный дизайн - mobile-first подход
 
-## Структура проекта
-wonders-landing/
-├── index.html # Главная страница
-├── bus-list.html # Страница подтверждения
-├── style.css # Основные стили
-├── script.js # JavaScript логика
-└── assets/
-├── images/ # Изображения
-│ ├── logo_black.svg
-│ ├── logo_white.svg
-│ ├── Hero.png
-│ ├── ing01.png - ing05.png
-│ ├── google-play.png
-│ ├── appgallery.png
-│ └── app-store.png
-└── icons/ # Иконки
-├── arrow-left.svg
-├── arrow-right.svg
-└── user.png
 
 ## Дизайн-система
 
