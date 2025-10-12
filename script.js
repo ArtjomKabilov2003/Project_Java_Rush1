@@ -474,7 +474,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     });
   }
 
-  // Mobile menu
+  // Мобильное меню
   const burger = document.getElementById('burger');
   const drawer = document.getElementById('mobileMenu');
 
@@ -487,7 +487,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
       document.body.classList.toggle('no-scroll', isOpen);
     });
 
-    // по ESC и клику по ссылке закрываем 
+     // по ESC и клику по ссылке закрываем 
     document.addEventListener('keydown', e=>{
       if(e.key==='Escape' && drawer.classList.contains('open')) burger.click();
     });

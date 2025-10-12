@@ -950,11 +950,6 @@ body.no-scroll{
   border-radius: 4px;
 }
 
-/* Убираем кнопку Apply из футера календаря */
-.calendar-footer .apply-btn {
-  display: none;
-}
-
 .calendar-footer .reset-btn {
   width: 100%;
   margin: 0;
