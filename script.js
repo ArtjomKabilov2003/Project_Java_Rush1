@@ -363,7 +363,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
       autocomplete(toInput, toList);
     }
 
-    // форма - ИСПРАВЛЕННАЯ ВЕРСИЯ
+        // форма - ИСПРАВЛЕННАЯ ВЕРСИЯ
     bookingForm.addEventListener("submit", (e)=>{
       e.preventDefault();
       
@@ -382,7 +382,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
       // Получаем актуальные значения из календаря
       const oneway = document.querySelector('.segmented input[name="trip_type"]:checked')?.value === 'oneway';
       
-      // Если даты не выбраны, используем значения по умолчанию
+      // Получаем выбранные даты
       let departDate = depInput.dataset?.value || "";
       let returnDate = retInput?.dataset?.value || "";
       
@@ -390,14 +390,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
       if (!departDate) {
         const today = new Date();
         departDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-      }
-      
-      // Если это round trip и дата возврата не выбрана, добавляем 3 дня к дате отправления
-      if (!oneway && !returnDate && departDate) {
-        const depart = new Date(departDate);
-        const returnD = new Date(depart);
-        returnD.setDate(depart.getDate() + 3);
-        returnDate = `${returnD.getFullYear()}-${String(returnD.getMonth()+1).padStart(2,'0')}-${String(returnD.getDate()).padStart(2,'0')}`;
       }
 
       const data = {
@@ -417,6 +409,11 @@ window.addEventListener("DOMContentLoaded", ()=>{
       
       const today = new Date(); today.setHours(0,0,0,0);
       if(data.departure && new Date(data.departure) < today) errs.push("Departure date cannot be in the past.");
+      
+      // ДОБАВЛЯЕМ проверку для round trip - дата возвращения обязательна
+      if(data.type==="round" && !data.return) {
+        errs.push("Please select return date for round trip.");
+      }
       
       if(data.type==="round" && data.return){
         if(new Date(data.return) < new Date(data.departure)) errs.push("Return date cannot be before departure.");
