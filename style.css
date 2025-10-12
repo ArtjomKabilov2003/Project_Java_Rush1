@@ -23,6 +23,7 @@ html,body{
   color:var(--text);
   overflow-x: hidden;
   font:16px/1.5 system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  scroll-behavior: smooth;
 }
 img{
   max-width:100%;
